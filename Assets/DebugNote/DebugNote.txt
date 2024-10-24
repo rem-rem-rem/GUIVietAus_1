@@ -1,0 +1,8 @@
+Lý do không sử dụng được EVKey, Unikey
+
+Lý do bạn bị như vậy là do Unity nói riêng hay các game engine nói chung chặn kĩ thuật keyboard hooking mà UniKey hay các bộ gõ tương tự sử dụng. Về cơ bản kĩ thuật này sẽ can thiệp trái phép vào luồng nhập xuất của hệ điều hành để tổng hợp kí tự trực tiếp trong input field/text area. Tuy nhiên vì kĩ thuật này còn được dùng nhiều trong các phần mềm gián điệp, keylogger nên đa số game engine đều chặn.
+Khi chọn option "Sử dụng clipboard" thì UniKey sẽ tổng hợp kí tự ở trong clipboard, sau đó mới đẩy nội dung từ clipboard vào input field/text area. Option này không bị lỗi vì nội dung trong clipboard là nội dung hợp lệ. Tuy nhiên option này sẽ làm sai lệch clipboard của user. Ví dụ mình vừa copy 1 đoạn chữ ở chỗ khác, nhưng chưa paste đoạn đấy vào chỗ cần paste, mà lại gõ vài chữ tiếng Việt trước, thì đoạn chữ copy sẽ bị mất.
+Unity chỉ hỗ trợ keyboard hooking trên Editor vì trước kia có nhiều kiến nghị về vấn đề này. Tuy nhiên họ sẽ không hỗ trợ trong bản build. Để gõ tiếng Việt trong bản build chỉ có 1 trong 3 cách sau:
+1. Hướng dẫn user bật "Sử dụng clipboard" và nói rõ tác dụng phụ của option này.
+2. Hướng dẫn user sử dụng bộ gõ Microsoft IME cho tiếng Việt. Bộ gõ này dùng luồng nhập xuất chuẩn và hợp lệ nên không bị các phần mềm chặn.
+3. Code logic bộ gõ vào trong dự án Unity để user không cần dùng bộ gõ ngoài. Nói nôm na là code lại UniKey bằng C#.
